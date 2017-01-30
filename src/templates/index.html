@@ -2,14 +2,22 @@
 <html>
     <head>
         <title>Shower Llama</title>
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     </head>
     <body>
-        <h1>Shower Llama</h1>
-        <form method="post" action="/api/play">
-            <p>Comma-Seperated Video List:</p>
-            <textarea name="url"></textarea><br>
+        <center>
+            <h1>Shower Llama</h1>
+                <form method="post" class="form-group" action="/">
+                    <p>Comma-Seperated Video List:</p>
+                    <textarea class="form-control" name="url" style="height: 250px; width: 250px;"></textarea><br>
+                    <br>
+                    <button class="btn btn-success" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;<a href="/api/clearList"><button class="btn btn-danger">Clear Current Playlist</button></a>
+                    <br><br>
+                    <a href="/api/skipCurrentSong"><button class="btn btn-info">Skip Current Song</button></a>
+                </form>
             <br>
-            <button type="submit">Submit</button>
-        </form>
+            <p>&copy;2017 - <a href="mailto:mxc9798@rit.edu">Mike Canning @ RIT CS</a></p>
+        </center>
     </body>
 </html>

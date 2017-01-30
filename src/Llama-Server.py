@@ -12,6 +12,8 @@ app = Flask(__name__)
 
 videos = []
 
+skipCurrentSong = False
+
 
 @app.route('/', methods=['GET'])
 def getRoot():
@@ -42,6 +44,23 @@ def clearList():
     global videos
     videos = []
     return redirect("/")
+
+
+@app.route('/api/skipCurrentSong', methods=['GET'])
+def setSkipCurrentSong():
+    global skipCurrentSong
+    skipCurrentSong = True
+    return redirect("/")
+
+
+@app.route('/api/checkSkipCurrentSong', methods=['GET'])
+def checkSkipCurrentSong():
+    global skipCurrentSong
+    if skipCurrentSong:
+        skipCurrentSong = False
+        return "True"
+    else:
+        return "False"
 
 
 while(True):

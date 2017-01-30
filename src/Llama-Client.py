@@ -22,7 +22,9 @@ def convertTime(timex):
 def musicTimer(timer, filepath):
     for x in range(0, timer):
         time.sleep(1)
-        print x
+        if checkSkip():
+            os.system("killall vlc")
+            break
     os.remove(filepath)
 
 
@@ -39,6 +41,14 @@ def playVideo(url):
     print length
     subprocess.Popen(["/Applications/VLC.app/Contents/MacOS/VLC", filepath, "vlc://quit"])
     musicTimer(length, filepath)
+
+
+def checkSkip():
+    rx = requests.get('http://127.0.0.1:5000/api/checkSkipCurrentSong')
+    if rx.text == "True":
+        return True
+    else:
+        return False
 
 
 while(True):
