@@ -44,7 +44,7 @@ def playVideo(url):
 
 
 def checkSkip():
-    rx = requests.get('http://127.0.0.1:5000/api/checkSkipCurrentSong')
+    rx = requests.get('http://127.0.0.1:80/api/checkSkipCurrentSong')
     if rx.text == "True":
         return True
     else:
@@ -53,7 +53,7 @@ def checkSkip():
 
 while(True):
     try:
-        r = requests.get('http://127.0.0.1:5000/api/getNextVideo')
+        r = requests.get('http://127.0.0.1:80/api/getNextVideo')
         if r.text != "None":
             print r.text
         else:
