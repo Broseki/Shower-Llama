@@ -4,11 +4,7 @@ from flask import request
 from flask import redirect
 import random
 
-
-lastEAS = ''
-
 app = Flask(__name__)
-
 
 videos = []
 
