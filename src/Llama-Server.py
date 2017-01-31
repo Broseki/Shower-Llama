@@ -32,9 +32,10 @@ def postRoot():
     url = request.form['url']
     url = url.split(',')
     for x in url:
-        if "playlist" in url:
-            convertPlaylistToCSV(request.form['url'])
-        videos.append(x)
+        if "playlist" in x:
+            convertPlaylistToCSV(x)
+        else:
+            videos.append(x)
     return redirect('/')
 
 
