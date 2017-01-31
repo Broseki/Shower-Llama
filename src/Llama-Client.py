@@ -2,6 +2,7 @@ import os
 import time
 import pafy
 import subprocess
+from subprocess import call
 from flask import Flask
 import requests
 
@@ -23,13 +24,13 @@ def musicTimer(timer, filepath):
     for x in range(0, timer):
         time.sleep(1)
         if checkSkip():
-            os.system("killall vlc")
+            call(['killall','-9','vlc'])
             break
     os.remove(filepath)
 
 
 def play(filepath):
-    os.system("/Applications/VLC.app/Contents/MacOS/VLC " + filepath)
+    os.system("vlc " + filepath)
 
 
 def playVideo(url):
@@ -39,12 +40,13 @@ def playVideo(url):
     filepath = "temp." + bestAudio.extension
     bestAudio.download(filepath=filepath)
     print length
-    subprocess.Popen(["/Applications/VLC.app/Contents/MacOS/VLC", filepath, "vlc://quit"])
+    subprocess.Popen(["vlc", filepath, "vlc://quit"])
     musicTimer(length, filepath)
 
 
 def checkSkip():
     rx = requests.get('http://127.0.0.1:80/api/checkSkipCurrentSong')
+    print(rx.text)
     if rx.text == "True":
         return True
     else:
@@ -55,7 +57,7 @@ while(True):
     try:
         r = requests.get('http://127.0.0.1:80/api/getNextVideo')
         if r.text != "None":
-            print r.text
+            playVideo(r.text)
         else:
             pass
     except:
