@@ -46,12 +46,13 @@ def clearList():
 def setSkipCurrentSong():
     global skipCurrentSong
     skipCurrentSong = True
-    return redirect("/")
+    return redirect('/')
 
 
 @app.route('/api/checkSkipCurrentSong', methods=['GET'])
 def checkSkipCurrentSong():
     global skipCurrentSong
+    print skipCurrentSong
     if skipCurrentSong:
         skipCurrentSong = False
         return "True"
