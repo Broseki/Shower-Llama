@@ -23,7 +23,7 @@ def musicTimer(timer, filename):
 
 
 def getAudioUrl(url):
-    output = subprocess.Popen(["/usr/local/bin/node", "/usr/local/lib/node_modules/offliberty/bin/off", url], stdout=subprocess.PIPE).communicate()[0]
+    output = subprocess.Popen(["/usr/bin/node", "/usr/lib/node_modules/offliberty/bin/off", url], stdout=subprocess.PIPE).communicate()[0]
     return output[14:]
 
 
