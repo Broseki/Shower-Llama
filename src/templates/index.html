@@ -1,9 +1,10 @@
+
 <!DOCTYPE HTML>
 <html>
     <head>
         <title>Shower Llama</title>
         <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     </head>
     <body>
         <center>
@@ -12,10 +13,13 @@
                     <p>Comma-Seperated Video List:</p>
                     <textarea class="form-control" name="url" style="height: 250px; width: 250px;"></textarea><br>
                     <br>
-                    <button class="btn btn-success" type="submit">Submit</button>&nbsp;&nbsp;&nbsp;<a href="/api/clearList"><button class="btn btn-danger">Clear Current Playlist</button></a>
+                    <button class="btn btn-success" type="submit">Submit</button>
                     <br><br>
-                    <a href="/api/skipCurrentSong"><button class="btn btn-info">Skip Current Song</button></a>
                 </form>
+		<a href="/api/skipCurrentSong"><button class="btn btn-info">Skip Current Song</button></a>
+		<br><br>
+		<a href="/api/clearList"><button class="btn btn-danger">Clear Current Playlist</button></a>
+		<br><br>
             <p><a href="https://github.com/mcanningjr/Shower-Llama">Contribute on GitHub</a></p>
             <p>&copy;2017 - <a href="https://people.rit.edu/mxc9798">Mike Canning @ RIT CS</a></p>
         </center>
