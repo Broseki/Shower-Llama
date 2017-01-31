@@ -3,12 +3,23 @@ from flask import render_template
 from flask import request
 from flask import redirect
 import random
+import requests
+from bs4 import BeautifulSoup as bs
 
 app = Flask(__name__)
 
 videos = []
 
 skipCurrentSong = False
+
+
+def convertPlaylistToCSV(url):
+    r = requests.get(url)
+    page = r.text
+    soup = bs(page, 'html.parser')
+    res = soup.find_all('a', {'class': 'pl-video-title-link'})
+    for l in res:
+        videos.append('https://www.youtube.com' + l.get("href"))
 
 
 @app.route('/', methods=['GET'])
@@ -18,10 +29,13 @@ def getRoot():
 
 @app.route('/', methods=['POST'])
 def postRoot():
-    url = request.form['url']
-    url = url.split(',')
-    for x in url:
-        videos.append(x)
+    if "playlist" in str(request.form['url']):
+        convertPlaylistToCSV(request.form['url'])
+    else:
+        url = request.form['url']
+        url = url.split(',')
+        for x in url:
+            videos.append(x)
     return redirect('/')
 
 
