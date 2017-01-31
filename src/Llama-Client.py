@@ -1,47 +1,39 @@
 import os
 import time
-import pafy
 import subprocess
 from subprocess import call
-from flask import Flask
 import requests
+import wget
+from mutagen.mp3 import MP3
 
 
-lastEAS = ''
-
-app = Flask(__name__)
-
-def convertTime(timex):
-    timeArray = str(timex).split(":")
-    seconds = 0
-    seconds += int(timeArray[0]) * 60 * 60
-    seconds += int(timeArray[1]) * 60
-    seconds += int(timeArray[2])
-    return seconds
+def getAudioFileDuration(filename):
+    audio = MP3(filename)
+    return int(audio.info.length)
 
 
-def musicTimer(timer, filepath):
+def musicTimer(timer, filename):
     for x in range(0, timer):
         time.sleep(1)
         if checkSkip():
             call(['killall','-9','vlc'])
+            os.remove(filename)
             break
-    os.remove(filepath)
+    os.remove(filename)
 
 
-def play(filepath):
-    os.system("vlc " + filepath)
+def getAudioUrl(url):
+    output = subprocess.Popen(["/usr/local/bin/node", "/usr/local/lib/node_modules/offliberty/bin/off", url], stdout=subprocess.PIPE).communicate()[0]
+    return output[14:]
 
 
 def playVideo(url):
-    video = pafy.new(url)
-    length = convertTime(video.duration)
-    bestAudio = video.getbestaudio()
-    filepath = "temp." + bestAudio.extension
-    bestAudio.download(filepath=filepath)
-    print length
-    subprocess.Popen(["vlc", filepath, "vlc://quit"])
-    musicTimer(length, filepath)
+    mp3url = getAudioUrl(url)
+    print mp3url
+    filename = wget.download(mp3url)
+    length = getAudioFileDuration(filename)
+    subprocess.Popen(["vlc", filename, "vlc://quit"])
+    musicTimer(length, filename)
 
 
 def checkSkip():
@@ -51,7 +43,6 @@ def checkSkip():
         return True
     else:
         return False
-
 
 while(True):
     try:
