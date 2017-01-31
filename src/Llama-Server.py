@@ -29,13 +29,12 @@ def getRoot():
 
 @app.route('/', methods=['POST'])
 def postRoot():
-    if "playlist" in str(request.form['url']):
-        convertPlaylistToCSV(request.form['url'])
-    else:
-        url = request.form['url']
-        url = url.split(',')
-        for x in url:
-            videos.append(x)
+    url = request.form['url']
+    url = url.split(',')
+    for x in url:
+        if "playlist" in url:
+            convertPlaylistToCSV(request.form['url'])
+        videos.append(x)
     return redirect('/')
 
 
