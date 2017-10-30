@@ -13,6 +13,8 @@ videos = []
 skipCurrentSong = False
 
 
+# Takes a playlist URL as input, and then populates the 'videos'
+# global variable with an array of Youtube URLs from that playlist.
 def convertPlaylistToCSV(url):
     r = requests.get(url)
     page = r.text
@@ -22,11 +24,14 @@ def convertPlaylistToCSV(url):
         videos.append('https://www.youtube.com' + l.get("href"))
 
 
+# Homepage route
 @app.route('/', methods=['GET'])
 def getRoot():
     return render_template("index.html")
 
 
+# Takes in a playlist URL from the client and extracts the 
+# Youtube URLs from the playlist.
 @app.route('/', methods=['POST'])
 def postRoot():
     url = request.form['url']
@@ -39,6 +44,7 @@ def postRoot():
     return redirect('/')
 
 
+# Returns a URL to the next video in the playlist
 @app.route('/api/getNextVideo', methods=['GET'])
 def getNextVideo():
     if len(videos) > 0:
@@ -49,6 +55,7 @@ def getNextVideo():
         return "None"
 
 
+# Clears the list of videos
 @app.route('/api/clearList', methods=['GET'])
 def clearList():
     global videos
@@ -56,6 +63,7 @@ def clearList():
     return redirect("/")
 
 
+# Skips the current song
 @app.route('/api/skipCurrentSong', methods=['GET'])
 def setSkipCurrentSong():
     global skipCurrentSong
@@ -63,6 +71,7 @@ def setSkipCurrentSong():
     return redirect('/')
 
 
+# Checks if the current song should be skipped
 @app.route('/api/checkSkipCurrentSong', methods=['GET'])
 def checkSkipCurrentSong():
     global skipCurrentSong
@@ -74,6 +83,7 @@ def checkSkipCurrentSong():
         return "False"
 
 
+# Runs the server
 while(True):
     try:
         app.run(host='0.0.0.0', port=80)
